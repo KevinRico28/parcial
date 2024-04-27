@@ -1,0 +1,70 @@
+// Interfaz para tipos de comercio
+interface TipoComercio {
+    double calcularDescuento(double descuento);
+}
+
+// Clase abstracta para tipos de comercio
+abstract class Comercio implements TipoComercio {
+    protected double descuento;
+
+    public Comercio(double descuento) {
+        this.descuento = descuento;
+    }
+}
+
+// Implementación de tipo de comercio para Ropa de niño
+class RopaDeNino extends Comercio {
+    public RopaDeNino(double descuento) {
+        super(descuento);
+    }
+
+    @Override
+    public double calcularDescuento(double descuento) {
+        return descuento * 0.08;
+    }
+}
+
+// Implementación de tipo de comercio para Dispositivos Electrónicos
+class DispositivosElectronicos extends Comercio {
+    public DispositivosElectronicos(double descuento) {
+        super(descuento);
+    }
+
+    @Override
+    public double calcularDescuento(double descuento) {
+        return descuento * 0.04;
+    }
+}
+
+public class CentroComercial {
+    private String nombreTienda;
+    private TipoComercio tipoComercio;
+    private double descuento;
+
+    public CentroComercial(String nombreTienda, TipoComercio tipoComercio, double descuento) {
+        this.nombreTienda = nombreTienda;
+        this.tipoComercio = tipoComercio;
+        this.descuento = descuento;
+    }
+
+    public double calcularDescuento() {
+        return tipoComercio.calcularDescuento(descuento);
+    }
+
+    public void imprimirDetalleTienda() {
+        System.out.println("Nombre de tienda: " + nombreTienda);
+        System.out.println("Tipo de comercio: " + tipoComercio.getClass().getSimpleName());
+        System.out.println("Descuento: " + descuento);
+    }
+
+    public static void main(String[] args) {
+        CentroComercial tiendaRopa = new CentroComercial("Ropa Infantil", new RopaDeNino(100), 100);
+        CentroComercial tiendaElectronica = new CentroComercial("Electrónicos", new DispositivosElectronicos(200), 200);
+
+        tiendaRopa.imprimirDetalleTienda();
+        System.out.println("Descuento calculado para ropa de niño: " + tiendaRopa.calcularDescuento());
+
+        tiendaElectronica.imprimirDetalleTienda();
+        System.out.println("Descuento calculado para dispositivos electrónicos: " + tiendaElectronica.calcularDescuento());
+    }
+}
